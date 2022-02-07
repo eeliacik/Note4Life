@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note4Life</title>
+  </head>
+
+  <style>
+    .banner {
+      background-color: rgb(119, 158, 40);
+      position: fixed;
+      width: 100vw;
+      height: 75px;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+    }
+    .header {
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size: 50px;
+      font-weight: bold;
+      color: ivory;
+      text-shadow: 1px 1px gray;
+      padding: 10px;
+      padding-left: 20px;
+      cursor: pointer;
+    }
+    .board {
+      position: absolute;
+      top: 75px;
+      left: 0;
+      width: 100%;
+      height: 100vw;
+      background-color: whitesmoke;
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+    }
+    .add-list-box {
+      width: fit-content;
+      padding: 0 10px 0 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+    }
+    .add-list-input {
+      width: 200px;
+      height: 22px;
+      font-size: 14px;
+      border-width: 1px;
+      border-radius: 5px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+    }
+    .add-list-button {
+      width: fit-content;
+      height: 26px;
+      margin-left: 5px;
+      font-size: 14px;
+      background-color: rgb(233, 255, 224);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+
+    .list-box {
+      display: flex;
+      flex-direction: row;
+    }
+    .list {
+      width: 300px;
+      height: fit-content;
+      margin-left: 5px;
+      background-color: snow;
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 4px;
+      border-color: lightslategrey;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .list-name-box {
+      width: 96%;
+      height: 50px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .list-name {
+      width: 70%;
+      font-family: "Times New Roman";
+      font-size: 20px;
+      padding: 10px;
+      text-align: center;
+    }
+    .list-button-box {
+      width: 30%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .rename-list-button {
+      width: 36px;
+      height: 26px;
+      font-size: 12px;
+      background-color: rgb(224, 250, 255);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .delete-list-button {
+      width: 36px;
+      height: 26px;
+      margin-left: 5px;
+      font-size: 12px;
+      background-color: rgb(255, 224, 224);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .add-task-box {
+      width: fit-content;
+      margin-bottom: 0px;
+      padding: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+    }
+    .add-task-input {
+      width: 200px;
+      height: 22px;
+      font-size: 14px;
+      border-width: 1px;
+      border-radius: 5px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+    }
+    .add-task-button {
+      width: fit-content;
+      height: 26px;
+      margin-left: 5px;
+      font-size: 14px;
+      background-color: rgb(233, 255, 224);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .task-box {
+      width: 95%;
+      margin-bottom: 0px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .task {
+      width: 90%;
+      height: fit-content;
+      min-height: 48px;
+      margin: 0 0 5px 0;
+      padding: 5px;
+      background-color: ghostwhite;
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 4px;
+      border-color: gray;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .task-check {
+      height: 22px;
+      width: 22px;
+    }
+    .task-name {
+      width: 80%;
+      font-size: 16px;
+      text-align: center;
+    }
+    .task-button-box {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .rename-task-button {
+      width: 35px;
+      height: 20px;
+      margin: 2px;
+      font-size: 12px;
+      background-color: rgb(224, 250, 255);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .delete-task-button {
+      width: 35px;
+      height: 20px;
+      margin: 2px;
+      font-size: 12px;
+      background-color: rgb(255, 224, 224);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .edit-task-button {
+      width: 35px;
+      height: 20px;
+      margin-left: 5px;
+      font-size: 12px;
+      background-color: rgb(224, 255, 225);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .edit-task-input {
+      width: 210px;
+      height: 22px;
+      font-size: 14px;
+      border-width: 1px;
+      border-radius: 5px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+    }
+    .edit-list-button {
+      width: 35px;
+      height: 22px;
+      font-size: 14px;
+      background-color: rgb(224, 255, 225);
+      border-width: 1px;
+      border-radius: 6px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      cursor: pointer;
+    }
+    .edit-list-input {
+      width: 220px;
+      height: 25px;
+      font-size: 16px;
+      margin: 10px 5px 10px 10px;
+      border-width: 1px;
+      border-radius: 5px;
+      box-shadow: 2px 2px rgb(185, 190, 188);
+      align-items: center;
+    }
+  </style>
+
+  <body>
+    <div class="banner" id="banner">
+      <div class="header" id="header">Note4Life</div>
+    </div>
+    <div class="board" id="board">
+      <div class="list-box" id="list-box"></div>
+      <div class="add-list-box" id="add-list-box">
+        <input
+          type="text"
+          class="add-list-input"
+          id="add-list-input"
+          placeholder="Enter new list name here..."
+          maxlength="30"
+          required
+        />
+        <button class="add-list-button" id="add-list-button">Add</button>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    // Data Object
+    const board = {
+      id: 1,
+      lists: [],
+    };
+    // Counter for new list id
+    var listIdCounter = 1;
+    // New list creator
+    function addNewList() {
+      // List name from input element
+      var listNameInput = document.getElementById("add-list-input").value;
+      // Cancel empty input
+      if (listNameInput !== "") {
+        var newListObj = {
+          id: listIdCounter,
+          name: listNameInput,
+          tasks: [],
+        };
+        // Adding new list to board object
+        board.lists.push(newListObj);
+        // New list division
+        var newList = document.createElement("div");
+        newList.className = "list";
+        newList.id = "list-" + listIdCounter;
+        var newListPar = document.getElementById("list-box");
+        newListPar.appendChild(newList);
+
+        var listNameBox = document.createElement("div");
+        listNameBox.className = "list-name-box";
+        listNameBox.id = "list-name-box-" + listIdCounter;
+        var listNameBoxPar = document.getElementById("list-" + listIdCounter);
+        listNameBoxPar.appendChild(listNameBox);
+        // New list name from text input
+        var newListName = document.createElement("div");
+        newListName.className = "list-name";
+        newListName.id = "list-name-" + listIdCounter;
+        newListName.innerHTML = listNameInput;
+        var newListNamePar = document.getElementById(
+          "list-name-box-" + listIdCounter
+        );
+        newListNamePar.appendChild(newListName);
+        // List name edit and delete button
+        var newListButtonBox = document.createElement("div");
+        newListButtonBox.className = "list-button-box";
+        newListButtonBox.id = "list-button-box-" + listIdCounter;
+        var newListButtonBoxPar = document.getElementById(
+          "list-name-box-" + listIdCounter
+        );
+        newListButtonBoxPar.appendChild(newListButtonBox);
+
+        // Edit list trigger is here
+        var renameListButton = document.createElement("button");
+        renameListButton.className = "rename-list-button";
+        renameListButton.id = "rename-list-button-" + listIdCounter;
+        renameListButton.innerHTML = "Edit";
+        renameListButton.onclick = editListSequence;
+        var renameListButtonPar = document.getElementById(
+          "list-button-box-" + listIdCounter
+        );
+        renameListButtonPar.appendChild(renameListButton);
+
+        var deleteListButton = document.createElement("button");
+        deleteListButton.className = "delete-list-button";
+        deleteListButton.id = "delete-list-button-" + listIdCounter;
+        deleteListButton.innerHTML = "Del";
+        deleteListButton.onclick = deleteList;
+        var deleteListButtonPar = document.getElementById(
+          "list-button-box-" + listIdCounter
+        );
+        deleteListButtonPar.appendChild(deleteListButton);
+        // Task division - this division is parent for new tasks
+        var taskBox = document.createElement("div");
+        taskBox.className = "task-box";
+        taskBox.id = "task-box-" + listIdCounter;
+        var taskBoxPar = document.getElementById("list-" + listIdCounter);
+        taskBoxPar.appendChild(taskBox);
+        // Add new task division
+        var addTaskBox = document.createElement("div");
+        addTaskBox.className = "add-task-box";
+        addTaskBox.id = "add-task-box-" + listIdCounter;
+        var addTaskBoxPar = document.getElementById("list-" + listIdCounter);
+        addTaskBoxPar.appendChild(addTaskBox);
+
+        var addTaskInput = document.createElement("input");
+        addTaskInput.type = "text";
+        addTaskInput.className = "add-task-input";
+        addTaskInput.id = "add-task-input-" + listIdCounter;
+        addTaskInput.placeholder = "Enter new task here...";
+        var addTaskInputPar = document.getElementById(
+          "add-task-box-" + listIdCounter
+        );
+        addTaskInputPar.appendChild(addTaskInput);
+
+        var addTaskButton = document.createElement("button");
+        addTaskButton.className = "add-task-button";
+        addTaskButton.id = "add-task-button-" + listIdCounter;
+        addTaskButton.innerHTML = "Add";
+        addTaskButton.onclick = addNewTask;
+        var addTaskButtonPar = document.getElementById(
+          "add-task-box-" + listIdCounter
+        );
+        addTaskButtonPar.appendChild(addTaskButton);
+
+        // Adding 1 to list id counter
+        listIdCounter++;
+        // Clearing new list text input
+        document.getElementById("add-list-input").value = "";
+      }
+    }
+    // Counter for new task id
+    var taskIdCounter = 1;
+    // New task creator
+    function addNewTask() {
+      // Getting list id from add task button element
+      var listRegex = /\d+/;
+      var listId = parseInt(this.id.match(listRegex));
+      // List name from input element
+      var taskNameInput = document.getElementById(
+        "add-task-input-" + listId
+      ).value;
+
+      if (taskNameInput !== "") {
+        for (let i = 0; i < board.lists.length; i++) {
+          if (listId === board.lists[i].id) {
+            var newTaskObj = {
+              id: taskIdCounter,
+              name: taskNameInput,
+              completed: "",
+            };
+            board.lists[i].tasks.push(newTaskObj);
+
+            var newTask = document.createElement("div");
+            newTask.className = "task";
+            newTask.id = "task-" + taskIdCounter;
+            var newTaskPar = document.getElementById("task-box-" + listId);
+            newTaskPar.appendChild(newTask);
+
+            var newTaskCheck = document.createElement("input");
+            newTaskCheck.className = "task-check";
+            newTaskCheck.id = "task-check-" + taskIdCounter;
+            newTaskCheck.type = "checkbox";
+            newTaskCheck.onclick = taskComplete;
+            var newTaskCheckPar = document.getElementById(
+              "task-" + taskIdCounter
+            );
+            newTaskCheckPar.appendChild(newTaskCheck);
+
+            var newTaskName = document.createElement("div");
+            newTaskName.className = "task-name";
+            newTaskName.id = "task-name-" + taskIdCounter;
+            newTaskName.innerHTML = taskNameInput;
+            var newTaskNamePar = document.getElementById(
+              "task-" + taskIdCounter
+            );
+            newTaskNamePar.appendChild(newTaskName);
+
+            var newTaskButtonBox = document.createElement("div");
+            newTaskButtonBox.className = "task-button-box";
+            newTaskButtonBox.id = "task-button-box-" + taskIdCounter;
+            var newTaskButtonBoxPar = document.getElementById(
+              "task-" + taskIdCounter
+            );
+            newTaskButtonBoxPar.appendChild(newTaskButtonBox);
+            // Edit task function trigger is here
+            var renameTaskButton = document.createElement("button");
+            renameTaskButton.className = "rename-task-button";
+            renameTaskButton.id = "rename-task-button-" + taskIdCounter;
+            renameTaskButton.onclick = editTaskSequence;
+            renameTaskButton.innerHTML = "Edit";
+            var renameTaskButtonPar = document.getElementById(
+              "task-button-box-" + taskIdCounter
+            );
+            renameTaskButtonPar.appendChild(renameTaskButton);
+
+            var deleteTaskButton = document.createElement("button");
+            deleteTaskButton.className = "delete-task-button";
+            deleteTaskButton.id = "delete-task-button-" + taskIdCounter;
+            deleteTaskButton.innerHTML = "Del";
+            deleteTaskButton.onclick = deleteTask;
+            var deleteTaskButtonPar = document.getElementById(
+              "task-button-box-" + taskIdCounter
+            );
+            deleteTaskButtonPar.appendChild(deleteTaskButton);
+          }
+        }
+
+        taskIdCounter++;
+
+        document.getElementById("add-task-input-" + listId).value = "";
+      }
+    }
+    // Task remover
+    function deleteTask() {
+      // Getting task id from delete task button element
+      var taskRegex = /\d+/;
+      var taskId_Del = parseInt(this.id.match(taskRegex));
+      // Remove task from board object
+      for (let i = 0; i < board.lists.length; i++) {
+        for (let j = 0; j < board.lists[i].tasks.length; j++) {
+          if (board.lists[i].tasks[j].id === taskId_Del) {
+            board.lists[i].tasks.splice(j, 1);
+          }
+        }
+      }
+
+      var delTask = document.getElementById("task-" + taskId_Del);
+      delTask.remove();
+    }
+    // List remover
+    function deleteList() {
+      var listRegex = /\d+/;
+      var listId_Del = parseInt(this.id.match(listRegex));
+      // Remove list from board object
+      for (let i = 0; i < board.lists.length; i++) {
+        if (
+          board.lists[i].tasks.length == 0 &&
+          board.lists[i].id === listId_Del
+        ) {
+          board.lists.splice(i, 1);
+          var delList = document.getElementById("list-" + listId_Del);
+          delList.remove();
+        }
+      }
+    }
+    // Task name editor
+    function editTaskSequence() {
+      // Getting task id from rename task button element
+      let taskRegex = /\d+/;
+      let taskId_edit = parseInt(this.id.match(taskRegex));
+      // Old task text
+      let oldTaskText = document.getElementById(
+        "task-name-" + taskId_edit
+      ).innerHTML;
+
+      document.getElementById("task-name-" + taskId_edit).remove();
+      document.getElementById("task-button-box-" + taskId_edit).remove();
+
+      var editTaskInput = document.createElement("input");
+      editTaskInput.className = "edit-task-input";
+      editTaskInput.id = "edit-task-input-" + taskId_edit;
+      editTaskInput.type = "text";
+      editTaskInput.value = oldTaskText;
+      var editTaskInputPar = document.getElementById("task-" + taskId_edit);
+      editTaskInputPar.appendChild(editTaskInput);
+
+      var editTaskButton = document.createElement("button");
+      editTaskButton.className = "edit-task-button";
+      editTaskButton.id = "edit-task-button-" + taskId_edit;
+      editTaskButton.innerHTML = "OK";
+      editTaskButton.onclick = finishTaskEdit;
+      var editTaskButtonPar = document.getElementById("task-" + taskId_edit);
+      editTaskButtonPar.appendChild(editTaskButton);
+
+      // Disable all inputs and buttons
+      document.getElementById("add-list-button").disabled = true;
+      document.getElementById("add-list-input").disabled = true;
+
+      for (let i = 1; i < listIdCounter; i++) {
+        if (document.getElementById("rename-list-button-" + i) !== null) {
+          document.getElementById("rename-list-button-" + i).disabled = true;
+        }
+        if (document.getElementById("delete-list-button-" + i) !== null) {
+          document.getElementById("delete-list-button-" + i).disabled = true;
+        }
+        if (document.getElementById("add-task-button-" + i) !== null) {
+          document.getElementById("add-task-button-" + i).disabled = true;
+        }
+        if (document.getElementById("add-task-input-" + i) !== null) {
+          document.getElementById("add-task-input-" + i).disabled = true;
+        }
+      }
+      for (let j = 1; j < taskIdCounter; j++) {
+        if (document.getElementById("rename-task-button-" + j) !== null) {
+          document.getElementById("rename-task-button-" + j).disabled = true;
+        }
+        if (document.getElementById("delete-task-button-" + j) !== null) {
+          document.getElementById("delete-task-button-" + j).disabled = true;
+        }
+        if (document.getElementById("task-check-" + j) !== null) {
+          document.getElementById("task-check-" + j).disabled = true;
+        }
+      }
+    }
+    // Finishing task name edit
+    function finishTaskEdit() {
+      // Getting task id from edit task button element
+      let taskRegex = /\d+/;
+      let taskId_finish = parseInt(this.id.match(taskRegex));
+      // New task text
+      let newTaskText = document.getElementById(
+        "edit-task-input-" + taskId_finish
+      ).value;
+      // Change task name in the board
+      for (let i = 0; i < board.lists.length; i++) {
+        for (let j = 0; j < board.lists[i].tasks.length; j++) {
+          if (board.lists[i].tasks[j].id === taskId_finish) {
+            board.lists[i].tasks[j].name = newTaskText;
+          }
+        }
+      }
+
+      document.getElementById("edit-task-input-" + taskId_finish).remove();
+      document.getElementById("edit-task-button-" + taskId_finish).remove();
+
+      var newTaskName = document.createElement("div");
+      newTaskName.className = "task-name";
+      newTaskName.id = "task-name-" + taskId_finish;
+      newTaskName.innerHTML = newTaskText;
+      var newTaskNamePar = document.getElementById("task-" + taskId_finish);
+      newTaskNamePar.appendChild(newTaskName);
+
+      var newTaskButtonBox = document.createElement("div");
+      newTaskButtonBox.className = "task-button-box";
+      newTaskButtonBox.id = "task-button-box-" + taskId_finish;
+      var newTaskButtonBoxPar = document.getElementById(
+        "task-" + taskId_finish
+      );
+      newTaskButtonBoxPar.appendChild(newTaskButtonBox);
+
+      var renameTaskButton = document.createElement("button");
+      renameTaskButton.className = "rename-task-button";
+      renameTaskButton.id = "rename-task-button-" + taskId_finish;
+      // Edit task function trigger
+      renameTaskButton.onclick = editTaskSequence;
+      renameTaskButton.innerHTML = "Edit";
+      var renameTaskButtonPar = document.getElementById(
+        "task-button-box-" + taskId_finish
+      );
+      renameTaskButtonPar.appendChild(renameTaskButton);
+
+      var deleteTaskButton = document.createElement("button");
+      deleteTaskButton.className = "delete-task-button";
+      deleteTaskButton.id = "delete-task-button-" + taskId_finish;
+      deleteTaskButton.innerHTML = "Del";
+      deleteTaskButton.onclick = deleteTask;
+      var deleteTaskButtonPar = document.getElementById(
+        "task-button-box-" + taskId_finish
+      );
+      deleteTaskButtonPar.appendChild(deleteTaskButton);
+
+      // Enable all inputs and buttons
+      document.getElementById("add-list-button").disabled = false;
+      document.getElementById("add-list-input").disabled = false;
+
+      for (let i = 1; i < listIdCounter; i++) {
+        if (document.getElementById("rename-list-button-" + i) !== null) {
+          document.getElementById("rename-list-button-" + i).disabled = false;
+        }
+        if (document.getElementById("delete-list-button-" + i) !== null) {
+          document.getElementById("delete-list-button-" + i).disabled = false;
+        }
+        if (document.getElementById("add-task-button-" + i) !== null) {
+          document.getElementById("add-task-button-" + i).disabled = false;
+        }
+        if (document.getElementById("add-task-input-" + i) !== null) {
+          document.getElementById("add-task-input-" + i).disabled = false;
+        }
+      }
+      for (let j = 1; j < taskIdCounter; j++) {
+        if (document.getElementById("rename-task-button-" + j) !== null) {
+          document.getElementById("rename-task-button-" + j).disabled = false;
+        }
+        if (document.getElementById("delete-task-button-" + j) !== null) {
+          document.getElementById("delete-task-button-" + j).disabled = false;
+        }
+        if (document.getElementById("task-check-" + j) !== null) {
+          document.getElementById("task-check-" + j).disabled = false;
+        }
+      }
+    }
+    // List name editor
+    function editListSequence() {
+      // Getting task id from rename task button element
+      var listRegex = /\d+/;
+      var listId_edit = parseInt(this.id.match(listRegex));
+      // Old list text
+      let oldListText = document.getElementById(
+        "list-name-" + listId_edit
+      ).innerHTML;
+
+      document.getElementById("list-name-" + listId_edit).remove();
+      document.getElementById("list-button-box-" + listId_edit).remove();
+
+      var editListInput = document.createElement("input");
+      editListInput.className = "edit-list-input";
+      editListInput.id = "edit-list-input-" + listId_edit;
+      editListInput.type = "text";
+      editListInput.value = oldListText;
+      var editListInputPar = document.getElementById(
+        "list-name-box-" + listId_edit
+      );
+      editListInputPar.appendChild(editListInput);
+
+      var editListButton = document.createElement("button");
+      editListButton.className = "edit-list-button";
+      editListButton.id = "edit-list-button-" + listId_edit;
+      editListButton.innerHTML = "OK";
+      editListButton.onclick = finishListEdit;
+      var editListButtonPar = document.getElementById(
+        "list-name-box-" + listId_edit
+      );
+      editListButtonPar.appendChild(editListButton);
+
+      // Disable all inputs and buttons
+      document.getElementById("add-list-button").disabled = true;
+      document.getElementById("add-list-input").disabled = true;
+
+      for (let i = 1; i < listIdCounter; i++) {
+        if (document.getElementById("rename-list-button-" + i) !== null) {
+          document.getElementById("rename-list-button-" + i).disabled = true;
+        }
+        if (document.getElementById("delete-list-button-" + i) !== null) {
+          document.getElementById("delete-list-button-" + i).disabled = true;
+        }
+        if (document.getElementById("add-task-button-" + i) !== null) {
+          document.getElementById("add-task-button-" + i).disabled = true;
+        }
+        if (document.getElementById("add-task-input-" + i) !== null) {
+          document.getElementById("add-task-input-" + i).disabled = true;
+        }
+      }
+      for (let j = 1; j < taskIdCounter; j++) {
+        if (document.getElementById("rename-task-button-" + j) !== null) {
+          document.getElementById("rename-task-button-" + j).disabled = true;
+        }
+        if (document.getElementById("delete-task-button-" + j) !== null) {
+          document.getElementById("delete-task-button-" + j).disabled = true;
+        }
+        if (document.getElementById("task-check-" + j) !== null) {
+          document.getElementById("task-check-" + j).disabled = true;
+        }
+      }
+    }
+    // Finishing list name edit
+    function finishListEdit() {
+      // Getting list id from edit list button element
+      let listRegex = /\d+/;
+      let listId_finish = parseInt(this.id.match(listRegex));
+      // New list text
+      let newListText = document.getElementById(
+        "edit-list-input-" + listId_finish
+      ).value;
+      // Change list name in the board
+      for (let i = 0; i < board.lists.length; i++) {
+        if (board.lists[i].id === listId_finish) {
+          board.lists[i].name = newListText;
+        }
+      }
+
+      document.getElementById("edit-list-input-" + listId_finish).remove();
+      document.getElementById("edit-list-button-" + listId_finish).remove();
+
+      var newListName = document.createElement("div");
+      newListName.className = "list-name";
+      newListName.id = "list-name-" + listId_finish;
+      newListName.innerHTML = newListText;
+      var newListNamePar = document.getElementById(
+        "list-name-box-" + listId_finish
+      );
+      newListNamePar.appendChild(newListName);
+
+      var newListButtonBox = document.createElement("div");
+      newListButtonBox.className = "list-button-box";
+      newListButtonBox.id = "list-button-box-" + listId_finish;
+      var newListButtonBoxPar = document.getElementById(
+        "list-name-box-" + listId_finish
+      );
+      newListButtonBoxPar.appendChild(newListButtonBox);
+
+      var renameListButton = document.createElement("button");
+      renameListButton.className = "rename-list-button";
+      renameListButton.id = "rename-list-button-" + listId_finish;
+      // Edit list function trigger
+      renameListButton.onclick = editListSequence;
+      renameListButton.innerHTML = "Edit";
+      var renameListButtonPar = document.getElementById(
+        "list-button-box-" + listId_finish
+      );
+      renameListButtonPar.appendChild(renameListButton);
+
+      var deleteListButton = document.createElement("button");
+      deleteListButton.className = "delete-list-button";
+      deleteListButton.id = "delete-list-button-" + listId_finish;
+      deleteListButton.innerHTML = "Del";
+      deleteListButton.onclick = deleteList;
+      var deleteListButtonPar = document.getElementById(
+        "list-button-box-" + listId_finish
+      );
+      deleteListButtonPar.appendChild(deleteListButton);
+
+      // Enable all inputs and buttons
+      document.getElementById("add-list-button").disabled = false;
+      document.getElementById("add-list-input").disabled = false;
+
+      for (let i = 1; i < listIdCounter; i++) {
+        if (document.getElementById("rename-list-button-" + i) !== null) {
+          document.getElementById("rename-list-button-" + i).disabled = false;
+        }
+        if (document.getElementById("delete-list-button-" + i) !== null) {
+          document.getElementById("delete-list-button-" + i).disabled = false;
+        }
+        if (document.getElementById("add-task-button-" + i) !== null) {
+          document.getElementById("add-task-button-" + i).disabled = false;
+        }
+        if (document.getElementById("add-task-input-" + i) !== null) {
+          document.getElementById("add-task-input-" + i).disabled = false;
+        }
+      }
+      for (let j = 1; j < taskIdCounter; j++) {
+        if (document.getElementById("rename-task-button-" + j) !== null) {
+          document.getElementById("rename-task-button-" + j).disabled = false;
+        }
+        if (document.getElementById("delete-task-button-" + j) !== null) {
+          document.getElementById("delete-task-button-" + j).disabled = false;
+        }
+        if (document.getElementById("task-check-" + j) !== null) {
+          document.getElementById("task-check-" + j).disabled = false;
+        }
+      }
+    }
+    // Task completion
+    function taskComplete() {
+      // Getting list id from task check element
+      let taskRegex = /\d+/;
+      let taskId_complete = parseInt(this.id.match(taskRegex));
+
+      // Change task name in the board
+      for (let i = 0; i < board.lists.length; i++) {
+        for (let j = 0; j < board.lists[i].tasks.length; j++) {
+          if (
+            board.lists[i].tasks[j].id === taskId_complete &&
+            board.lists[i].tasks[j].completed === ""
+          ) {
+            board.lists[i].tasks[j].completed = "yes";
+          } else if (
+            board.lists[i].tasks[j].id === taskId_complete &&
+            board.lists[i].tasks[j].completed === "yes"
+          ) {
+            board.lists[i].tasks[j].completed = "";
+          }
+        }
+      }
+    }
+    // Add list input
+    var addListButton = document.getElementById("add-list-button");
+    addListButton.addEventListener("click", addNewList);
+    // Add list 'Enter' key
+    var listNameInputEnterKey = document.getElementById("add-list-input");
+    listNameInputEnterKey.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("add-list-button").click();
+      }
+    });
+  </script>
+</html>
