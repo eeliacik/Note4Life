@@ -1,3 +1,3 @@
 # Not4Life
 ## Javascript Todo list
-## https://stupendous-rabanadas-054ab4.netlify.app/
+## https://loquacious-jelly-a1a783.netlify.app
